@@ -122,7 +122,7 @@
 								<div class="controls">
 									<input type="text" class="input-xlarge" data-bind="value: selectedArtist() ? selectedArtist().firstName : null" id="firstName">
 									<p class="help-block">
-										The given first name of this artist.  No nicknames, Sparky!
+										The given first name of this artist.  
 									</p>
 									
 								</div>
@@ -142,11 +142,6 @@
 						</fieldset>
 					</form>
 				</div>
-				<script>
-					function test(a,b){
-						alert(a.selectedArtist().commit())
-					}
-				</script>
 				<div class="modal-footer">
 					<a href="#" class="btn btn-danger" data-bind="click: function(data, event) { fury.publish( 'artist.cancelSave', { data : data, event : event } ) }">Cancel</a>
 					<a href="#" class="btn btn-primary" data-bind="click: function(data, event) { fury.publish( 'artist.saveRequested', { data : data, event : event } ) }">Save</a>
