@@ -67,8 +67,7 @@ var Media = Entity.extend({
 /*
  * Service Delegate
  *
- * Abstracts out-of-browser dependencies.  In this case,
- * we're hiding the fact that we use the Amplify framework for easy local storage.
+ * Abstracts out-of-browser dependencies.  
  */
 var GalleryService = function () {
     this.loadArtists = function(  ) {
@@ -208,8 +207,7 @@ fury.register({
 
 
 $(document).ready(function(){
-	console.log('ready')
-    // Ask fury for the todoPresentationModel bean and tell Knockout to watch it for changes
+    // Ask fury for the PresentationModel bean and tell Knockout to watch it for changes
     ko.applyBindings( fury.bean( "galleryPresentationModel" ) );
 
     // Publish the "application.start" message (think dispatchEvent( eventName, data ) )
