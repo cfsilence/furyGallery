@@ -1,9 +1,9 @@
 component
 {
-	import com.cfsilence.service.TestService;
+	import com.cfsilence.service.GalleryService;
 	
 	variables.util = new com.cfsilence.util.Util();
-	variables.service = new TestService();
+	variables.service = new GalleryService();
 	 
 	remote array function getArtists()
 	{

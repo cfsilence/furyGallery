@@ -2,7 +2,7 @@ component extends="mxunit.framework.TestCase"
 {
 	function setUp()
 	{
-		variables.service = createObject('component', 'furyGallery.com.cfsilence.service.TestService');
+		variables.service = createObject('component', 'furyGallery.com.cfsilence.service.GalleryService');
 		variables.util = createObject('component', 'furyGallery.com.cfsilence.util.Util').init();
 	}
 	

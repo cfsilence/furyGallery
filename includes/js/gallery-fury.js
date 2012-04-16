@@ -1,4 +1,4 @@
-var serviceURL = 'com/cfsilence/service/TestServiceRemote.cfc?_cf_nodebug=true';
+var APPLICATION = { serviceURL : 'com/cfsilence/service/GalleryServiceRemote.cfc?_cf_nodebug=true' };
 
 
 // our base object - which all others shall extend
@@ -73,7 +73,7 @@ var GalleryService = function () {
     this.loadArtists = function(  ) {
         $.ajax(
 			{
-				url: serviceURL + '&method=getArtists&returnFormat=JSON',
+				url: APPLICATION.serviceURL + '&method=getArtists&returnFormat=JSON',
 				success: function(data, textStatus, jqXHR){
 					fury.publish( 'artists.loaded', data );
 				},
@@ -109,7 +109,7 @@ var GalleryController = function(){
 		$.ajax(
 			{
 				type: 'POST',
-				url: serviceURL + '&method=saveArtist&returnFormat=JSON',
+				url: APPLICATION.serviceURL + '&method=saveArtist&returnFormat=JSON',
 				data: { artist : ko.toJSON( this.pm.selectedArtist() ) } ,
 				success: function(d, textStatus, jqXHR){
 					// hide the window
