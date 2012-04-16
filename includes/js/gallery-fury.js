@@ -28,7 +28,7 @@ var Entity = Class.extend({
 
 var Artist = Entity.extend({
 	init : function( artistId, art, firstName, lastName, address, city, state, postalCode, email, phone, fax, thePassword ){
-		this.artistId = ko.protectedObservable( artistId ) || -1;
+		this.artistId = ko.protectedObservable( artistId );
 		this.art = ko.observableArray( art );  // doth this need protection? probably not, since it's an array of entities who already are protected.
 		this.firstName = ko.protectedObservable( firstName );
 		this.lastName = ko.protectedObservable( lastName );
@@ -46,7 +46,7 @@ var Artist = Entity.extend({
 
 var Art = Entity.extend({
 	init : function( artId, artist, artName, description, price, largeImage, media, isSold ){
-		this.artId = ko.protectedObservable( artId ) || -1;
+		this.artId = ko.protectedObservable( artId );
 		this.artist = ko.protectedObservable( artist );
 		this.artName = ko.protectedObservable( artName );
 		this.description = ko.protectedObservable( description );
@@ -59,7 +59,7 @@ var Art = Entity.extend({
 
 var Media = Entity.extend({
 	init : function( mediaId, mediaType ){
-		this.mediaId = ko.protectedObservable( mediaId ) || -1;
+		this.mediaId = ko.protectedObservable( mediaId );
 		this.mediaType = ko.protectedObservable( mediaType );
 	}
 });

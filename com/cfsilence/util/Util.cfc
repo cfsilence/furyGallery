@@ -42,22 +42,16 @@ component{
 				{
 					evaluate( 'obj.set' & key & '("' & object[ key ] & '")' ); 				
 				}
-				// only inflate simple values for now.  complex values aren't working
-				/*
+				// right now it only inflates array based relationships.  why? because that's all i use...				
 				if( isArray( object[key] ) )
 				{
 					for( var child in object[key] )
 					{
 						var childObj = inflate( child );
-						request.debug( key );
-						request.debug( obj );
-						request.debug( childObj );
-						request.debug( 'obj.add' & key & '()' );
-						obj.addArt( childObj );
-						evaluate( 'obj.add#key#(#childObj#)' );  // for some unknown reason this throws a 'complex objects can not be converted to simple values' error.  why?  who knows...
+						evaluate( 'obj.add#key#(childObj)' );  //fixed the 'complex objects' error - stupid mistake...
 					}
 				}
-				*/
+				
 			}
 		}
 		

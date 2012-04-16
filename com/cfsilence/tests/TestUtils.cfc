@@ -8,7 +8,7 @@ component extends="mxunit.framework.TestCase"
 	
 	private function getDefalatedObject()
 	{
-		var obj = variables.service.getArtistById(2);
+		var obj = variables.service.getArtistById(1);
 		return variables.util.deflate( obj );		
 	}
 	
