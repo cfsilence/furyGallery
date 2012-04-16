@@ -101,12 +101,7 @@ var GalleryController = function(){
 	});
 	
 	fury.subscribe( "artist.saveRequested", this, function( data ) {
-		// validate it
-		console.log( ko.toJSON( data.data.selectedArtist() ))
-		console.log( JSON.stringify( data.data.selectedArtist() ) )
-		console.log( data.data.selectedArtist() )
-		console.log( ko.dataFor( this.pm.selectedArtist() )  )
-		console.log( JSON.stringify( ko.dataFor( this.pm.selectedArtist() ) ) )
+		// todo: validate it
 		
 		// commit it to the model
 		this.pm.selectedArtist().commit();
