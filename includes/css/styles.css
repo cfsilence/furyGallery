@@ -1,3 +1,13 @@
 clear{
 	clear: both;
 }
+.modal-body{
+	max-height: 350px;
+	overflow-y: auto;
+}
+.full-width{
+	width: 100%;
+}
+.align-right{
+	text-align: right;
+}

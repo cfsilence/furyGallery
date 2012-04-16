@@ -16,7 +16,15 @@ component
 		return artistObjects;
 	}
 	
-	remote Artist function getArtistById( numeric id )
+	remote boolean function saveArtist( string artist='' )
+	{
+		var deserializedArtist = deserializeJSON(arguments.artist);
+		var artistObj = variables.service.getArtistById( deserializedArtist.artistId );
+		
+		return variables.service.saveArtist( variables.util.populate( artistObj, deserializedArtist ) );
+	}
+	
+	remote struct function getArtistById( numeric id )
 	{
 		return variables.util.deflate( variables.service.getArtistById( id ) );
 	}
@@ -32,7 +40,7 @@ component
 		return artObjects;
 	}
 	
-	remote Art function getArtById( numeric id )
+	remote struct function getArtById( numeric id )
 	{
 		return variables.util.deflate( variables.service.getArtById( id ) );
 	}
