@@ -70,7 +70,10 @@ var Media = Entity.extend({
  * Abstracts out-of-browser dependencies.  
  */
 var GalleryService = function () {
-    this.loadArtists = function(  ) {
+	
+	var self = this;
+	
+    self.loadArtists = function(  ) {
         $.ajax(
 			{
 				url: APPLICATION.serviceURL + '&method=getArtists&returnFormat=JSON',
@@ -83,6 +86,22 @@ var GalleryService = function () {
 			}
     	);
     }
+	
+	self.saveArtist = function( artist ){
+		$.ajax(
+			{
+				type: 'POST',
+				url: APPLICATION.serviceURL + '&method=saveArtist&returnFormat=JSON',
+				data: { artist : artist } ,
+				success: function(d, textStatus, jqXHR){
+					fury.publish( 'artist.saved', d );
+				},
+				error: function(e){
+					console.log(e)
+				}
+			}
+    	);
+	}
 }
 
 var GalleryController = function(){
@@ -106,31 +125,20 @@ var GalleryController = function(){
 		$('#editArtContainer').modal('hide');
 	});
 	
+	fury.subscribe( "artist.saved", this, function( id ) {
+		// hide the window
+		this.pm.selectedArtist().artistId = id;
+		$('#editArtContainer').modal('hide');
+	});
+	
 	fury.subscribe( "artist.saveRequested", this, function( data ) {
 		// todo: validate it
 		
 		// commit it to the model
 		this.pm.selectedArtist().commit();
 		
-		var self = this;
-		
 		// save it
-		$.ajax(
-			{
-				type: 'POST',
-				url: APPLICATION.serviceURL + '&method=saveArtist&returnFormat=JSON',
-				data: { artist : ko.toJSON( this.pm.selectedArtist() ) } ,
-				success: function(d, textStatus, jqXHR){
-					// hide the window
-					self.pm.selectedArtist().artistId = d;
-					$('#editArtContainer').modal('hide');
-				},
-				error: function(e){
-					console.log(e)
-				}
-			}
-    	);
-		
+		this.service.saveArtist( ko.toJSON( this.pm.selectedArtist() ) )
 		
 	});
 	
