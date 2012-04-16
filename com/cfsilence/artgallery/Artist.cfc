@@ -1,6 +1,6 @@
 ﻿component persistent='true' table='artists' entityname='Artist' accessors='true'
 {
-	property name='artistId' type='numeric' generator='increment' assemble='true';
+	property name='artistId' type='numeric' fieldType='id' generator='increment' assemble='true';
 	property name='art' fieldtype='one-to-many' inverse='true' singularname="art" cfc='com.cfsilence.artgallery.Art' lazy='false' fkcolumn='artistId' assemble='true';
 	property name='firstName' type='string' assemble='true';
 	property name='lastName' type='string' assemble='true'; 

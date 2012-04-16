@@ -16,11 +16,10 @@ component
 		return artistObjects;
 	}
 	
-	remote boolean function saveArtist( string artist='' )
+	remote numeric function saveArtist( string artist='' )
 	{
 		var deserializedArtist = deserializeJSON(arguments.artist);
-		var artistObj = variables.service.getArtistById( deserializedArtist.artistId );
-		
+		var artistObj = variables.service.getArtistById( structKeyExists( deserializedArtist, "artistId") ? deserializedArtist.artistId : -1 );
 		return variables.service.saveArtist( variables.util.populate( artistObj, deserializedArtist ) );
 	}
 	

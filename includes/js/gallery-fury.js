@@ -8,14 +8,14 @@ var Entity = Class.extend({
     },
 	commit : function() {
 		for ( var prop in this ){
-			if( this.hasOwnProperty( prop ) && this[prop].hasOwnProperty('commit') ){
+			if( this.hasOwnProperty( prop ) && this[prop].hasOwnProperty('commit') && this[prop] != undefined ){
 					this[prop].commit()
 			}
 		}
 	},
 	reset : function() {
 		for ( var prop in this ){
-			if( this.hasOwnProperty( prop ) && this[prop].hasOwnProperty('reset') ){
+			if( this.hasOwnProperty( prop ) && this[prop].hasOwnProperty('reset') && this[prop] != undefined ){
 				this[prop].reset();
 			}
 		}
@@ -28,7 +28,7 @@ var Entity = Class.extend({
 
 var Artist = Entity.extend({
 	init : function( artistId, art, firstName, lastName, address, city, state, postalCode, email, phone, fax, thePassword ){
-		this.artistId = ko.protectedObservable( artistId );
+		this.artistId = ko.protectedObservable( artistId ) || -1;
 		this.art = ko.observableArray( art );  // doth this need protection? probably not, since it's an array of entities who already are protected.
 		this.firstName = ko.protectedObservable( firstName );
 		this.lastName = ko.protectedObservable( lastName );
@@ -46,7 +46,7 @@ var Artist = Entity.extend({
 
 var Art = Entity.extend({
 	init : function( artId, artist, artName, description, price, largeImage, media, isSold ){
-		this.artId = ko.protectedObservable( artId );
+		this.artId = ko.protectedObservable( artId ) || -1;
 		this.artist = ko.protectedObservable( artist );
 		this.artName = ko.protectedObservable( artName );
 		this.description = ko.protectedObservable( description );
@@ -59,7 +59,7 @@ var Art = Entity.extend({
 
 var Media = Entity.extend({
 	init : function( mediaId, mediaType ){
-		this.mediaId = ko.protectedObservable( mediaId );
+		this.mediaId = ko.protectedObservable( mediaId ) || -1;
 		this.mediaType = ko.protectedObservable( mediaType );
 	}
 });
@@ -86,11 +86,18 @@ var GalleryService = function () {
 }
 
 var GalleryController = function(){
-	fury.inject( this, "galleryPresentationModel", "pm", function() { 
-	} );
+	fury.inject( this, "galleryPresentationModel", "pm", function() {} );
 	
 	/* Service injection */
     fury.inject( this, "galleryService", "service", function() { });
+	
+	fury.subscribe( "artist.new", this, function() {
+		console.log( this.pm.artists);
+		var newArtist = new Artist();
+		this.pm.artists.push( newArtist );
+		this.pm.selectedArtist( newArtist );
+		$('#editArtContainer').modal('show');
+	});
 	
 	fury.subscribe( "artist.cancelSave", this, function( data ) {
 		// reject the changes so our model isn't dirty
@@ -105,6 +112,8 @@ var GalleryController = function(){
 		// commit it to the model
 		this.pm.selectedArtist().commit();
 		
+		var self = this;
+		
 		// save it
 		$.ajax(
 			{
@@ -113,6 +122,7 @@ var GalleryController = function(){
 				data: { artist : ko.toJSON( this.pm.selectedArtist() ) } ,
 				success: function(d, textStatus, jqXHR){
 					// hide the window
+					self.pm.selectedArtist().artistId = d;
 					$('#editArtContainer').modal('hide');
 				},
 				error: function(e){
@@ -171,6 +181,9 @@ var GalleryController = function(){
 			$('#editArtContainer').modal({});
 		});
 		
+		$('#newArtistBtn').click(function(){
+			fury.publish( 'artist.new' );
+		});
     });
 	
 };

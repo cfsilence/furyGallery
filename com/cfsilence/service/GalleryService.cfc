@@ -6,15 +6,21 @@ component
 		return entityLoad('Artist');
 	}
 	
-	public boolean function saveArtist( com.cfsilence.artgallery.Artist artist )
+	public numeric function saveArtist( com.cfsilence.artgallery.Artist artist )
 	{
 		entitySave( artist );
-		return true;
+		
+		return artist.getArtistId();
 	}
 	
 	public com.cfsilence.artgallery.Artist function getArtistById( numeric id )
 	{
-		return entityLoadByPK('Artist', arguments.id);
+		var artist =  entityLoadByPK('Artist', arguments.id);
+		if( isNull( artist ) )
+		{
+			artist = entityNew('Artist');
+		}
+		return artist;
 	}
 	
 	public array function getArt()
@@ -24,6 +30,11 @@ component
 	
 	public com.cfsilence.artgallery.Art function getArtById( numeric id )
 	{
-		return entityLoadByPK('Art', arguments.id);
+		var art = entityLoadByPK('Art', arguments.id);
+		if( isNull( art ) )
+		{
+			art = entityNew('Art');
+		}
+		return art;
 	}
 }

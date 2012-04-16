@@ -60,6 +60,15 @@
 						Fury Artists
 					</h2>
 					
+					<div class="row" style="padding: 10px 0px 10px 0px;">
+						<div class="span12">
+							<a id="newArtistBtn" class="btn btn-info new-artist-btn">
+								<i class="icon-user icon-white"></i>
+								 New Artist
+							</a>
+						</div>
+					</div>
+					
 					<table class="table table-striped table-bordered">
 						<thead>
 							<tr>
@@ -75,7 +84,7 @@
 								<th>
 									State
 								</th>
-								<th>
+								<th width="200">
 									Action
 								</th>
 							</tr>
@@ -92,9 +101,13 @@
 								</td>
 								<td>
 									<a class="btn btn-info edit-art-btn">
-										Edit Artist
+										<i class="icon-edit icon-white"></i>
+										 Edit Artist
 									</a>
-									<a class="btn btn-info view-art-btn" href="#">View Art</a>
+									<a class="btn btn-info view-art-btn" href="#">
+										<i class="icon-list-alt icon-white"></i>
+										 View Art
+									</a>
 								</td>
 							</tr>
 						</tbody>

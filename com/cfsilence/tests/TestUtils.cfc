@@ -12,6 +12,17 @@ component extends="mxunit.framework.TestCase"
 		return variables.util.deflate( obj );		
 	}
 	
+	function canCreateNewArtist()
+	{
+		var artist = variables.service.getArtistById(-1);
+		debug(artist);
+		assert( !isNull( artist ) );
+		artist.setFirstName('todd');
+		artist.setLastName('sharp');
+		variables.service.saveArtist( artist );
+		debug(artist);
+	}
+	
 	function canDeflateObjectIntoStruct()
 	{
 		assertIsStruct( getDefalatedObject() );			
